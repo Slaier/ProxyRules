@@ -1,0 +1,15 @@
+{
+  "name": "proxy-rules",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "surgio generate --cache-snippet",
+    "clean": "surgio clean-cache"
+  },
+  "engines": {
+    "node": "^14"
+  },
+  "dependencies": {
+    "surgio": "^2.9.1"
+  }
+}
