@@ -11,12 +11,26 @@ dns:
   default-nameserver:
     - 114.114.114.114
     - 180.76.76.76
+  fake-ip-filter:
+    - router.asus.com
+    - '+.lan'
+    - '+.localdomain'
+    - '+.example'
+    - '+.invalid'
+    - '+.localhost'
+    - '+.test'
+    - '+.local'
+    - '+.home.arpa'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - '+.localhost.sec.qq.com'
+    - '+.localhost.ptlogin2.qq.com'
   nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
   fallback:  # IP addresses who is outside CN in GEOIP will fallback here
-    - https://dns.rubyfish.cn/dns-query
     - https://i.233py.com/dns-query
+    - https://public.dns.iij.jp/dns-query
   fallback-filter:
     geoip: true  # Enable GEOIP-based fallback
     ipcidr:
@@ -55,25 +69,27 @@ rules:
 # Dns
 - DOMAIN,dns.alidns.com,DIRECT
 - DOMAIN,doh.pub,DIRECT
-- DOMAIN,dns.rubyfish.cn,DIRECT
 - DOMAIN,i.233py.com,DIRECT
+- DOMAIN,public.dns.iij.jp,DIRECT
+
+# Force Direct
+- DOMAIN,officecdn-microsoft-com.akamaized.net,DIRECT
+- DOMAIN,production.cloudflare.docker.com,DIRECT
+- DOMAIN-SUFFIX,pkgs.org,DIRECT
 
 # Reject
-{{ remoteSnippets.advertising.main('REJECT') | clash }}
-{{ remoteSnippets.advertisingplus.main('REJECT') | clash }}
-{{ remoteSnippets.hijacking.main('REJECT') | clash }}
-{{ remoteSnippets.privacy.main('REJECT') | clash }}
+{{ remoteSnippets.reject.main('REJECT') | clash }}
 
 # Proxy
 {{ remoteSnippets.twitter.main('🌎 NHK') | clash }}
-{{ remoteSnippets.global.main('✈️ Proxy') | clash }}
+{{ remoteSnippets.gfw.main('✈️ Proxy') | clash }}
+{{ remoteSnippets.greatfire.main('✈️ Proxy') | clash }}
 
 # Direct
-{{ remoteSnippets.streamingse.main('DIRECT') | clash }}
-{{ remoteSnippets.streamingcn.main('DIRECT') | clash }}
-{{ remoteSnippets.china.main('DIRECT') | clash }}
-- DOMAIN,production.cloudflare.docker.com,DIRECT
-- DOMAIN-SUFFIX,pkgs.org,DIRECT
+{{ remoteSnippets.direct.main('DIRECT') | clash }}
+
+# Telegram
+{{ remoteSnippets.telegram.main('✈️ Proxy') | clash }}
 
 # LAN
 - DOMAIN-SUFFIX,local,DIRECT
