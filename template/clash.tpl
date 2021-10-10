@@ -65,6 +65,18 @@ proxy-groups:
   url: 'http://connectivitycheck.gstatic.com/generate_204'
   interval: 300
 
+- type: fallback
+  name: 🎵 Spotify
+  proxies:
+    - 👉 SpotifyPrefer
+    - 👍 Auto
+  url: 'http://connectivitycheck.gstatic.com/generate_204'
+  interval: 300
+
+- type: select
+  name: 👉 SpotifyPrefer
+  proxies: {{ getClashNodeNames(nodeList, customFilters.cheapFilter) | json }}
+
 rules:
 # Dns
 - DOMAIN,dns.alidns.com,DIRECT
@@ -76,6 +88,11 @@ rules:
 - DOMAIN,officecdn-microsoft-com.akamaized.net,DIRECT
 - DOMAIN,production.cloudflare.docker.com,DIRECT
 - DOMAIN-SUFFIX,pkgs.org,DIRECT
+
+# Spotify
+- DOMAIN-SUFFIX,spoti.fi,🎵 Spotify
+- DOMAIN-SUFFIX,scdn.co,🎵 Spotify
+- DOMAIN-KEYWORD,spotify,🎵 Spotify
 
 # Reject
 {{ remoteSnippets.reject.main('REJECT') | clash }}
