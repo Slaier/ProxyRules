@@ -66,15 +66,15 @@ proxy-groups:
   interval: 300
 
 - type: fallback
-  name: 🎵 Spotify
+  name: 🇭🇰 HK
   proxies:
-    - 👉 SpotifyPrefer
+    - 👉 HKPrefer
     - 👍 Auto
   url: 'http://connectivitycheck.gstatic.com/generate_204'
   interval: 300
 
 - type: select
-  name: 👉 SpotifyPrefer
+  name: 👉 HKPrefer
   proxies: {{ getClashNodeNames(nodeList, customFilters.cheapFilter) | json }}
 
 rules:
@@ -90,9 +90,12 @@ rules:
 - DOMAIN-SUFFIX,pkgs.org,DIRECT
 
 # Spotify
-- DOMAIN-SUFFIX,spoti.fi,🎵 Spotify
-- DOMAIN-SUFFIX,scdn.co,🎵 Spotify
-- DOMAIN-KEYWORD,spotify,🎵 Spotify
+- DOMAIN-SUFFIX,spoti.fi,🇭🇰 HK
+- DOMAIN-SUFFIX,scdn.co,🇭🇰 HK
+- DOMAIN-KEYWORD,spotify,🇭🇰 HK
+
+# sky
+- DOMAIN-SUFFIX,thatgamecompany.com,🇭🇰 HK
 
 # Reject
 {{ remoteSnippets.reject.main('REJECT') | clash }}

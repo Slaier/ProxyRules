@@ -54,7 +54,7 @@ module.exports = {
       name: 'Clash.yaml',
       template: 'clash',
       provider: 'provider',
-      combineProviders: [ 'rixcloud' ],
+      // combineProviders: [ 'rixcloud' ],
       customParams: {
         dns: true,
       }
