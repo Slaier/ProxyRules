@@ -59,11 +59,17 @@ proxy-groups:
   url: 'http://connectivitycheck.gstatic.com/generate_204'
   interval: 300
 
-- type: url-test
+- type: fallback
   name: 🌎 NHK
-  proxies: {{ getClashNodeNames(nodeList, customFilters.nhkFilter) | json }}
+  proxies:
+    - 👉 NHKPrefer
+    - 👍 Auto
   url: 'http://connectivitycheck.gstatic.com/generate_204'
   interval: 300
+
+- type: select
+  name: 👉 NHKPrefer
+  proxies: {{ getClashNodeNames(nodeList, customFilters.nhkFilter) | json }}
 
 - type: fallback
   name: 🇭🇰 HK
