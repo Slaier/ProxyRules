@@ -40,6 +40,10 @@ module.exports = {
       name: 'direct',
       url: 'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/direct.txt',
     },
+    {
+      name: 'apple',
+      url: 'https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/apple.txt',
+    }
   ],
   customFilters: {
     commonFilter: myCommonFilter,
@@ -54,7 +58,7 @@ module.exports = {
       name: 'Clash.yaml',
       template: 'clash',
       provider: 'provider',
-      // combineProviders: [ 'rixcloud' ],
+      combineProviders: [ 'soCloud', 'catnet' ],
       customParams: {
         dns: true,
       }

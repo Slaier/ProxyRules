@@ -94,6 +94,7 @@ rules:
 - DOMAIN,officecdn-microsoft-com.akamaized.net,DIRECT
 - DOMAIN,production.cloudflare.docker.com,DIRECT
 - DOMAIN-SUFFIX,pkgs.org,DIRECT
+- DOMAIN,isofiles.bd581e55.workers.dev,DIRECT
 
 # Spotify
 - DOMAIN-SUFFIX,spoti.fi,🇭🇰 HK
@@ -108,6 +109,7 @@ rules:
 
 # Proxy
 {{ remoteSnippets.twitter.main('🌎 NHK') | clash }}
+{{ remoteSnippets.apple.main('✈️ Proxy') | clash }}
 {{ remoteSnippets.gfw.main('✈️ Proxy') | clash }}
 {{ remoteSnippets.greatfire.main('✈️ Proxy') | clash }}
 
