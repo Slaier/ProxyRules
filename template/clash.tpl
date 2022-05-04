@@ -11,28 +11,10 @@ dns:
   default-nameserver:
     - 114.114.114.114
     - 180.76.76.76
-  fake-ip-filter:
-    - router.asus.com
-    - '+.lan'
-    - '+.localdomain'
-    - '+.example'
-    - '+.invalid'
-    - '+.localhost'
-    - '+.test'
-    - '+.local'
-    - '+.home.arpa'
-    - '+.msftconnecttest.com'
-    - '+.msftncsi.com'
-    - '+.localhost.sec.qq.com'
-    - '+.localhost.ptlogin2.qq.com'
   nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-  fallback:  # IP addresses who is outside CN in GEOIP will fallback here
     - https://i.233py.com/dns-query
-    - https://public.dns.iij.jp/dns-query
   fallback-filter:
-    geoip: true  # Enable GEOIP-based fallback
+    geoip: false
     ipcidr:
       - 240.0.0.0/4
 {% endif %}
@@ -51,7 +33,7 @@ proxy-groups:
 
 - type: select
   name: 👉 Prefer
-  proxies: {{ getClashNodeNames(nodeList, customFilters.cheapFilter) | json }}
+  proxies: {{ getClashNodeNames(nodeList, customFilters.commonFilter) | json }}
 
 - type: url-test
   name: 👍 Auto
@@ -59,36 +41,11 @@ proxy-groups:
   url: 'http://connectivitycheck.gstatic.com/generate_204'
   interval: 300
 
-- type: fallback
-  name: 🌎 NHK
-  proxies:
-    - 👉 NHKPrefer
-    - 👍 Auto
-  url: 'http://connectivitycheck.gstatic.com/generate_204'
-  interval: 300
-
-- type: select
-  name: 👉 NHKPrefer
-  proxies: {{ getClashNodeNames(nodeList, customFilters.nhkFilter) | json }}
-
-- type: fallback
-  name: 🇭🇰 HK
-  proxies:
-    - 👉 HKPrefer
-    - 👍 Auto
-  url: 'http://connectivitycheck.gstatic.com/generate_204'
-  interval: 300
-
-- type: select
-  name: 👉 HKPrefer
-  proxies: {{ getClashNodeNames(nodeList, customFilters.cheapFilter) | json }}
-
 rules:
 # Dns
 - DOMAIN,dns.alidns.com,DIRECT
 - DOMAIN,doh.pub,DIRECT
 - DOMAIN,i.233py.com,DIRECT
-- DOMAIN,public.dns.iij.jp,DIRECT
 
 # Force Direct
 - DOMAIN,officecdn-microsoft-com.akamaized.net,DIRECT
@@ -96,28 +53,14 @@ rules:
 - DOMAIN-SUFFIX,pkgs.org,DIRECT
 - DOMAIN,isofiles.bd581e55.workers.dev,DIRECT
 
-# Spotify
-- DOMAIN-SUFFIX,spoti.fi,🇭🇰 HK
-- DOMAIN-SUFFIX,scdn.co,🇭🇰 HK
-- DOMAIN-KEYWORD,spotify,🇭🇰 HK
-
-# sky
-- DOMAIN-SUFFIX,thatgamecompany.com,🇭🇰 HK
-
-# Reject
-{{ remoteSnippets.reject.main('REJECT') | clash }}
-
-# Proxy
-{{ remoteSnippets.twitter.main('🌎 NHK') | clash }}
-{{ remoteSnippets.apple.main('✈️ Proxy') | clash }}
-{{ remoteSnippets.gfw.main('✈️ Proxy') | clash }}
-{{ remoteSnippets.greatfire.main('✈️ Proxy') | clash }}
+# Epic
+- DOMAIN,entitlement-public-service-prod08.ol.epicgames.com,✈️ Proxy
+- DOMAIN,lightswitch-public-service-prod06.ol.epicgames.com,✈️ Proxy
+- DOMAIN,friends-public-service-prod06.ol.epicgames.com,✈️ Proxy
+- DOMAIN,ue-launcher-website-prod.ol.epicgames.com,✈️ Proxy
 
 # Direct
 {{ remoteSnippets.direct.main('DIRECT') | clash }}
-
-# Telegram
-{{ remoteSnippets.telegram.main('✈️ Proxy') | clash }}
 
 # LAN
 - DOMAIN-SUFFIX,local,DIRECT
