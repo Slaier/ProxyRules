@@ -18,6 +18,10 @@ module.exports = {
       name: 'direct',
       url: 'https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@main/Rulesets/Surge/Basic/CN.list',
     },
+    {
+      name: 'foreign',
+      url: 'https://cdn.jsdelivr.net/gh/Hackl0us/SS-Rule-Snippet@main/Rulesets/Surge/Basic/foreign.list',
+    }
   ],
   customFilters: {
     commonFilter: myCommonFilter,

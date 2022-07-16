@@ -13,6 +13,7 @@ dns:
     - 180.76.76.76
   nameserver:
     - https://i.233py.com/dns-query
+    - https://dns.alidns.com/dns-query
   fallback-filter:
     geoip: false
     ipcidr:
@@ -23,23 +24,9 @@ proxies:
   {{ getClashNodes(nodeList, customFilters.commonFilter) | json }}
 
 proxy-groups:
-- type: fallback
-  name: ✈️ Proxy
-  proxies:
-    - 👉 Prefer
-    - 👍 Auto
-  url: 'http://connectivitycheck.gstatic.com/generate_204'
-  interval: 120
-
 - type: select
-  name: 👉 Prefer
+  name: ✈️ Proxy
   proxies: {{ getClashNodeNames(nodeList, customFilters.commonFilter) | json }}
-
-- type: url-test
-  name: 👍 Auto
-  proxies: {{ getClashNodeNames(nodeList, customFilters.commonFilter) | json }}
-  url: 'http://connectivitycheck.gstatic.com/generate_204'
-  interval: 300
 
 rules:
 # Dns
@@ -48,19 +35,13 @@ rules:
 - DOMAIN,i.233py.com,DIRECT
 
 # Force Direct
-- DOMAIN,officecdn-microsoft-com.akamaized.net,DIRECT
-- DOMAIN,production.cloudflare.docker.com,DIRECT
 - DOMAIN-SUFFIX,pkgs.org,DIRECT
-- DOMAIN,isofiles.bd581e55.workers.dev,DIRECT
-
-# Epic
-- DOMAIN,entitlement-public-service-prod08.ol.epicgames.com,✈️ Proxy
-- DOMAIN,lightswitch-public-service-prod06.ol.epicgames.com,✈️ Proxy
-- DOMAIN,friends-public-service-prod06.ol.epicgames.com,✈️ Proxy
-- DOMAIN,ue-launcher-website-prod.ol.epicgames.com,✈️ Proxy
 
 # Direct
 {{ remoteSnippets.direct.main('DIRECT') | clash }}
+
+# Foreign
+{{ remoteSnippets.foreign.main('✈️ Proxy') | clash }}
 
 # LAN
 - DOMAIN-SUFFIX,local,DIRECT
